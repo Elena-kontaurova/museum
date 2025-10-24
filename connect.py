@@ -1,5 +1,5 @@
 from peewee import Model, MySQLDatabase, CharField, IntegerField, \
-                   DateTimeField, AutoField
+                   DateTimeField, AutoField, ForeignKeyField
 
 db = MySQLDatabase("musuem", user='root', password='lenok',
                    host='localhost', port=3306)
@@ -43,6 +43,9 @@ class Exhibit(DataBase):
     dimensions = CharField()
     value = IntegerField()
     condition = CharField()
+    exposishi = CharField()
+    image = CharField()
+    aftor = ForeignKeyField(Authors)
 
 
 class Registration(DataBase):
