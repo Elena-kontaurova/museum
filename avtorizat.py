@@ -1,5 +1,5 @@
 import tkinter as tk
-from connect import Authorization, Exposition, Exhibit
+from connect import Authorization, Exposition, Exhibit, Authors
 from tkinter import messagebox
 
 root = tk.Tk()
@@ -251,10 +251,14 @@ def glavnui():
             image = image.subsample(40)
             image_label = tk.Label(kub1, image=image, background="#d2d1c0")
             image_label.place(x=49, y=0)
-            text1 = tk.Label(kub1, text='Классическое исскуство',
+            text1 = tk.Label(kub1, text='Классическая  скульптура',
                              wraplength=100, font=('', 11),
                              background="#d2d1c0")
             text1.place(x=55, y=100)
+            kub1.bind('<Button-1>', lambda _: klassik_isskustv())
+            image_label.bind('<Button-1>',
+                             lambda _: klassik_isskustv())
+            text1.bind('<Button-1>', lambda _: klassik_isskustv())
         elif i == 2:
             image2 = tk.PhotoImage(file='4.png')
             image2 = image2.subsample(3)
@@ -325,6 +329,18 @@ def vistavka_sovremen_isskus():
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=10, y=13)
+        elif ima == "leto.png":
+            image_nado = image_nado.subsample(7)
+            images_list.append(image_nado)
+            image_lab = tk.Label(pole_kub, image=image_nado,
+                                 background="#d2d1c0")
+            image_lab.place(x=10, y=13)
+        elif ima == "zima.png":
+            image_nado = image_nado.subsample(5)
+            images_list.append(image_nado)
+            image_lab = tk.Label(pole_kub, image=image_nado,
+                                 background="#d2d1c0")
+            image_lab.place(x=10, y=13)
 
         text = tk.Label(pole_kub, text=f"{i.title}",
                         background="#d2d1c0",
@@ -350,9 +366,11 @@ def vistavka_sovremen_isskus():
         autor = tk.Label(pole_kub,
                          text=f"Автор: {i.aftor.first_name}",
                          background="#d2d1c0",
-                         font=('', 10))
+                         font=('', 10),
+                         cursor='hand2')
         autor.place(x=220, y=100)
-        autor.bind('<Button-1>', lambda _: Autor())
+        autor.bind('<Button-1>', lambda _,
+                   author_id=i.aftor.id: Autor(author_id, 'sovremen'))
 
         eyar_creation.place(x=220, y=84)
         price = tk.Label(pole_kub, text=f"Цена: {i.value} р",
@@ -375,18 +393,203 @@ def vistavka_sovremen_isskus():
     back_button.place(x=10, y=465)
 
 
-def Autor():
+def klassik_isskustv():
+    global images_list
+    if 'images_list' not in globals():
+        images_list = []
+
     for widget in root.winfo_children():
-        widget.destroy()
+        if widget != root:
+            widget.destroy()
+
+    root.config(background="#d2d1c0")
     shapka = tk.Label(root, background="#b0ae8e", width=47, height=3,
-                      text='АВТОРЫ', font=('', 15))
+                      text='ВЫСТАВСКА - КЛАССИЧЕСКАЯ СКУЛЬПТУРА',
+                      font=('', 15))
     shapka.place(x=0, y=0)
 
-# Autorizashion()
+    def get_exponat():
+        exponat = Exhibit.select().where(
+            Exhibit.exposishi == 'Классическая скульптура')
+        return exponat
 
+    expon = get_exponat()
+
+    main_frame = tk.Frame(root, background="#d2d1c0")
+    main_frame.place(x=0, y=60, width=500, height=400)
+
+    canvas = tk.Canvas(main_frame, bg="#d2d1c0", highlightthickness=0)
+    scrollbar = tk.Scrollbar(main_frame, orient="vertical",
+                             command=canvas.yview)
+    content_frame = tk.Frame(canvas, background="#d2d1c0")
+
+    canvas.create_window((0, 0), window=content_frame, anchor="nw")
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    scrollbar.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
+
+    y_pos = 100
+    for i in expon:
+        pole_kub = tk.Frame(content_frame, width=440, height=160,
+                            background="#d2d1c0",
+                            relief='groove', borderwidth=2)
+        pole_kub.pack(pady=10, padx=20)
+        pole_kub.pack_propagate(False)
+
+        ima = f"{i.image}"
+        image_nado = tk.PhotoImage(file=ima)
+
+        if ima == "trona.png":
+            image_nado = image_nado.subsample(7)
+            images_list.append(image_nado)
+            image_lab = tk.Label(pole_kub, image=image_nado,
+                                 background="#d2d1c0")
+            image_lab.place(x=40, y=10)
+
+        elif ima == "vozch.png":
+            image_nado = image_nado.subsample(6)
+            images_list.append(image_nado)
+            image_lab = tk.Label(pole_kub, image=image_nado,
+                                 background="#d2d1c0")
+            image_lab.place(x=10, y=26)
+        elif ima == "sisk.png":
+            image_nado = image_nado.subsample(7)
+            images_list.append(image_nado)
+            image_lab = tk.Label(pole_kub, image=image_nado,
+                                 background="#d2d1c0")
+            image_lab.place(x=30, y=8)
+
+        text = tk.Label(pole_kub, text=f"{i.title}",
+                        background="#d2d1c0",
+                        font=('', 12))
+        text.place(x=220, y=8)
+        opisanie = tk.Label(pole_kub, text=f"{i.description}",
+                            background="#d2d1c0",
+                            font=('', 10))
+        opisanie.place(x=220, y=30)
+        materials = tk.Label(pole_kub, text=f"{i.material}",
+                             background="#d2d1c0",
+                             font=('', 10))
+        materials.place(x=220, y=48)
+        razmer = tk.Label(pole_kub, text=f"Размер: {i.dimensions}",
+                          background="#d2d1c0",
+                          font=('', 10))
+        razmer.place(x=220, y=66)
+        eyar_creation = tk.Label(pole_kub,
+                                 text=f"Год создания: {i.creation_year}",
+                                 background="#d2d1c0",
+                                 font=('', 10))
+
+        autor = tk.Label(pole_kub,
+                         text=f"Автор: {i.aftor.first_name}",
+                         background="#d2d1c0",
+                         font=('', 10),
+                         cursor='hand2')
+        autor.place(x=220, y=100)
+        autor.bind('<Button-1>', lambda _,
+                   author_id=i.aftor.id: Autor(author_id, 'klassik'))
+
+        eyar_creation.place(x=220, y=84)
+        price = tk.Label(pole_kub, text=f"Цена: {i.value} р",
+                         background="#d2d1c0",
+                         font=('', 13))
+        price.place(x=290, y=125)
+
+        y_pos += 180
+
+    content_frame.update_idletasks()
+    canvas.config(scrollregion=canvas.bbox("all"))
+
+    def on_mousewheel(event):
+        canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    canvas.bind("<MouseWheel>", on_mousewheel)
+
+    back_button = tk.Button(root, text="Назад", command=glavnui,
+                            background="#b0ae8e", font=('', 10))
+    back_button.place(x=10, y=465)
+
+
+def Autor(author_id, previous_exhibition=None):
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    author = Authors.get(Authors.id == author_id)
+
+    shapka = tk.Label(root, background="#b0ae8e", width=47, height=3,
+                      text=f'Автор: {author.first_name} {author.last_name}',
+                      font=('', 15))
+    shapka.place(x=0, y=0)
+
+    main_frame = tk.Frame(root, background="#d2d1c0")
+    main_frame.place(x=0, y=60, width=500, height=400)
+
+    info_frame = tk.Frame(main_frame, background="#d2d1c0")
+    info_frame.pack(pady=20, padx=20, fill="both", expand=True)
+
+    name_label = tk.Label(info_frame,
+                          text=f"{author.first_name} {author.last_name}",
+                          background="#d2d1c0",
+                          font=('', 16, 'bold'))
+    name_label.pack(pady=10)
+
+    if author.biography:
+        bio_label = tk.Label(info_frame,
+                             text=f"Биография: {author.biography}",
+                             background="#d2d1c0",
+                             font=('', 10),
+                             wraplength=400,
+                             justify="left")
+        bio_label.pack(pady=5)
+
+    if author.birth_date:
+        years_label = tk.Label(info_frame,
+                               text=f"Годы жизни: {author.birth_date}",
+                               background="#d2d1c0",
+                               font=('', 10))
+        years_label.pack(pady=5)
+
+    works_label = tk.Label(info_frame,
+                           text="Другие работы автора:",
+                           background="#d2d1c0",
+                           font=('', 12, 'bold'))
+    works_label.pack(pady=10)
+
+    other_works = Exhibit.select().where(Exhibit.aftor == author).limit(5)
+
+    for work in other_works:
+        work_label = tk.Label(info_frame,
+                              text=f"• {work.title} ({work.creation_year})",
+                              background="#d2d1c0",
+                              font=('', 9))
+        work_label.pack(pady=2)
+
+    def back_command():
+        if previous_exhibition == 'sovremen':
+            vistavka_sovremen_isskus()
+        elif previous_exhibition == 'klassik':
+            klassik_isskustv()
+        else:
+            glavnui()
+
+    back_button = tk.Button(root, text="Назад",
+                            command=back_command,
+                            background="#b0ae8e", font=('', 10))
+    back_button.place(x=10, y=465)
+
+    home_button = tk.Button(root, text="На главную",
+                            command=glavnui,
+                            background="#b0ae8e", font=('', 10))
+    home_button.place(x=400, y=465)
+
+
+Autorizashion()
 
 # glavnui()
 
-vistavka_sovremen_isskus()
+# vistavka_sovremen_isskus()
+
+# klassik_isskustv()
 
 root.mainloop()
