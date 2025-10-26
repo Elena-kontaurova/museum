@@ -11,7 +11,6 @@ root.iconbitmap('museum_3584.ico')
 
 current_window = None
 
-
 def Autorizashion():
     global image_l, current_window
     if current_window:
