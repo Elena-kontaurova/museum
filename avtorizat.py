@@ -11,6 +11,7 @@ root.iconbitmap('museum_3584.ico')
 
 current_window = None
 
+
 def Autorizashion():
     global image_l, current_window
     if current_window:
@@ -104,7 +105,7 @@ def Autorizashion():
     button_requstration.place(x=120, y=330)
     button_requstration.bind('<Button-1>', lambda _: Requstrat())
 
-    image_l = tk.PhotoImage(file='logg.png')
+    image_l = tk.PhotoImage(file='img_autori/logg.png')
     image_l = image_l.subsample(5)
     image_label = tk.Label(current_window,
                            image=image_l,
@@ -199,7 +200,7 @@ def Requstrat():
 
 
 def glavnui():
-    global image, image1, image2, image4
+    global image, image1, image2, image4, image5
     ''' выбор экпозиции'''
     for widget in root.winfo_children():
         widget.destroy()
@@ -221,7 +222,7 @@ def glavnui():
     element_count = mm.count()
 
     for i in range(0, element_count):
-        global image, image1, image2, image4
+        global image, image1, image2, image4, image5
         kub1 = tk.Label(root, width=30, height=10, background="#d2d1c0",
                         relief='groove', border=1,
                         borderwidth=1)
@@ -233,7 +234,7 @@ def glavnui():
             y_pos += 170
 
         if i == 0:
-            image1 = tk.PhotoImage(file='1.png')
+            image1 = tk.PhotoImage(file='img_exposition/1.png')
             image1 = image1.subsample(14)
             image_label = tk.Label(kub1, image=image1, background="#d2d1c0")
             image_label.place(x=34, y=0)
@@ -247,7 +248,7 @@ def glavnui():
             text1.bind('<Button-1>', lambda _: vistavka_sovremen_isskus())
 
         elif i == 1:
-            image = tk.PhotoImage(file='3.png')
+            image = tk.PhotoImage(file='img_exposition/3.png')
             image = image.subsample(40)
             image_label = tk.Label(kub1, image=image, background="#d2d1c0")
             image_label.place(x=49, y=0)
@@ -260,7 +261,7 @@ def glavnui():
                              lambda _: klassik_isskustv())
             text1.bind('<Button-1>', lambda _: klassik_isskustv())
         elif i == 2:
-            image2 = tk.PhotoImage(file='4.png')
+            image2 = tk.PhotoImage(file='img_exposition/4.png')
             image2 = image2.subsample(3)
             image_label = tk.Label(kub1, image=image2, background="#d2d1c0")
             image_label.place(x=30, y=30)
@@ -273,7 +274,21 @@ def glavnui():
                              lambda _: tradighi_isskustv())
             text1.bind('<Button-1>', lambda _: tradighi_isskustv())
         elif i == 3:
-            image4 = tk.PhotoImage(file='pustota.png')
+            image5 = tk.PhotoImage(file='img_exposition/5.png')
+            image5 = image5.subsample(9)
+            image_label = tk.Label(kub1, image=image5, background="#d2d1c0")
+            image_label.place(x=40, y=5)
+            text1 = tk.Label(kub1, text=f'{mm[i].title}',
+                             wraplength=100, font=('', 11),
+                             background="#d2d1c0")
+            text1.place(x=63, y=100)
+            kub1.bind('<Button-1>', lambda _: arheolog_bydushev())
+            image_label.bind('<Button-1>',
+                             lambda _: arheolog_bydushev())
+            text1.bind('<Button-1>', lambda _: arheolog_bydushev())
+
+        elif i == 4:
+            image4 = tk.PhotoImage(file='img_exposition/pustota.png')
             image4 = image4.subsample(8)
             image_label = tk.Label(kub1, image=image4, background="#d2d1c0")
             image_label.place(x=60, y=10)
@@ -573,26 +588,26 @@ def vistavka_sovremen_isskus():
         ima = f"{i.image}"
         image_nado = tk.PhotoImage(file=ima)
 
-        if ima == "one.png":
+        if ima == "img_sovremen/one.png":
             image_nado = image_nado.subsample(8)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=20, y=10)
 
-        elif ima == "two.png":
+        elif ima == "img_sovremen/two.png":
             image_nado = image_nado.subsample(9)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=10, y=13)
-        elif ima == "leto.png":
+        elif ima == "img_sovremen/leto.png":
             image_nado = image_nado.subsample(7)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=10, y=13)
-        elif ima == "zima.png":
+        elif ima == "img_sovremen/zima.png":
             image_nado = image_nado.subsample(5)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
@@ -697,25 +712,31 @@ def klassik_isskustv():
         ima = f"{i.image}"
         image_nado = tk.PhotoImage(file=ima)
 
-        if ima == "trona.png":
+        if ima == "img_classik/trona.png":
             image_nado = image_nado.subsample(7)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=40, y=10)
 
-        elif ima == "vozch.png":
+        elif ima == "img_classik/vozch.png":
             image_nado = image_nado.subsample(6)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=10, y=26)
-        elif ima == "sisk.png":
+        elif ima == "img_classik/sisk.png":
             image_nado = image_nado.subsample(7)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=30, y=8)
+        elif ima == "img_classik/pismo.png":
+            image_nado = image_nado.subsample(8)
+            images_list.append(image_nado)
+            image_lab = tk.Label(pole_kub, image=image_nado,
+                                 background="#d2d1c0")
+            image_lab.place(x=30, y=10)
 
         text = tk.Label(pole_kub, text=f"{i.title}",
                         background="#d2d1c0",
@@ -815,25 +836,31 @@ def tradighi_isskustv():
         ima = f"{i.image}"
         image_nado = tk.PhotoImage(file=ima)
 
-        if ima == "kazach.png":
+        if ima == "img_tradi/kazach.png":
             image_nado = image_nado.subsample(6)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=10, y=10)
 
-        elif ima == "ngtort.png":
+        elif ima == "img_tradi/ngtort.png":
             image_nado = image_nado.subsample(7)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=10, y=10)
-        elif ima == "rino.png":
+        elif ima == "img_tradi/rino.png":
             image_nado = image_nado.subsample(15)
             images_list.append(image_nado)
             image_lab = tk.Label(pole_kub, image=image_nado,
                                  background="#d2d1c0")
             image_lab.place(x=20, y=8)
+        elif ima == "img_tradi/tixive.png":
+            image_nado = image_nado.subsample(8)
+            images_list.append(image_nado)
+            image_lab = tk.Label(pole_kub, image=image_nado,
+                                 background="#d2d1c0")
+            image_lab.place(x=30, y=10)
 
         text = tk.Label(pole_kub, text=f"{i.title}",
                         background="#d2d1c0",
@@ -864,6 +891,110 @@ def tradighi_isskustv():
         autor.place(x=220, y=100)
         autor.bind('<Button-1>', lambda _,
                    author_id=i.aftor.id: Autor(author_id, 'tradighi'))
+
+        eyar_creation.place(x=220, y=84)
+        price = tk.Label(pole_kub, text=f"Цена: {i.value} р",
+                         background="#d2d1c0",
+                         font=('', 13))
+        price.place(x=290, y=125)
+
+        y_pos += 180
+
+    content_frame.update_idletasks()
+    canvas.config(scrollregion=canvas.bbox("all"))
+
+    def on_mousewheel(event):
+        canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    canvas.bind("<MouseWheel>", on_mousewheel)
+
+    back_button = tk.Button(root, text="Назад", command=glavnui,
+                            background="#b0ae8e", font=('', 10))
+    back_button.place(x=10, y=465)
+
+
+def arheolog_bydushev():
+    global images_list
+    if 'images_list' not in globals():
+        images_list = []
+
+    for widget in root.winfo_children():
+        if widget != root:
+            widget.destroy()
+
+    root.config(background="#d2d1c0")
+    shapka = tk.Label(root, background="#b0ae8e", width=47, height=3,
+                      text='ВЫСТАВКА - АРХЕОЛОГИЯ БУДУЩЕГО',
+                      font=('', 15))
+    shapka.place(x=0, y=0)
+
+    def get_exponat():
+        exponat = Exhibit.select().where(
+            Exhibit.exposishi == 'Археология будущего')
+        return exponat
+
+    expon = get_exponat()
+
+    main_frame = tk.Frame(root, background="#d2d1c0")
+    main_frame.place(x=0, y=60, width=500, height=400)
+
+    canvas = tk.Canvas(main_frame, bg="#d2d1c0", highlightthickness=0)
+    scrollbar = tk.Scrollbar(main_frame, orient="vertical",
+                             command=canvas.yview)
+    content_frame = tk.Frame(canvas, background="#d2d1c0")
+
+    canvas.create_window((0, 0), window=content_frame, anchor="nw")
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    scrollbar.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
+
+    y_pos = 100
+    for i in expon:
+        pole_kub = tk.Frame(content_frame, width=440, height=160,
+                            background="#d2d1c0",
+                            relief='groove', borderwidth=2)
+        pole_kub.pack(pady=10, padx=20)
+        pole_kub.pack_propagate(False)
+
+        ima = f"{i.image}"
+        image_nado = tk.PhotoImage(file=ima)
+
+        image_nado = image_nado.subsample(8)
+        images_list.append(image_nado)
+        image_lab = tk.Label(pole_kub, image=image_nado,
+                             background="#d2d1c0")
+        image_lab.place(x=30, y=10)
+
+        text = tk.Label(pole_kub, text=f"{i.title}",
+                        background="#d2d1c0",
+                        font=('', 12))
+        text.place(x=220, y=8)
+        opisanie = tk.Label(pole_kub, text=f"{i.description}",
+                            background="#d2d1c0",
+                            font=('', 10))
+        opisanie.place(x=220, y=30)
+        materials = tk.Label(pole_kub, text=f"{i.material}",
+                             background="#d2d1c0",
+                             font=('', 10))
+        materials.place(x=220, y=48)
+        razmer = tk.Label(pole_kub, text=f"Размер: {i.dimensions}",
+                          background="#d2d1c0",
+                          font=('', 10))
+        razmer.place(x=220, y=66)
+        eyar_creation = tk.Label(pole_kub,
+                                 text=f"Год создания: {i.creation_year}",
+                                 background="#d2d1c0",
+                                 font=('', 10))
+
+        autor = tk.Label(pole_kub,
+                         text=f"Автор: {i.aftor.first_name}",
+                         background="#d2d1c0",
+                         font=('', 10),
+                         cursor='hand2')
+        autor.place(x=220, y=100)
+        autor.bind('<Button-1>', lambda _,
+                   author_id=i.aftor.id: Autor(author_id, 'arheol'))
 
         eyar_creation.place(x=220, y=84)
         price = tk.Label(pole_kub, text=f"Цена: {i.value} р",
@@ -947,6 +1078,8 @@ def Autor(author_id, previous_exhibition=None):
             klassik_isskustv()
         elif previous_exhibition == 'tradighi':
             tradighi_isskustv()
+        elif previous_exhibition == 'arheol':
+            arheolog_bydushev()
         else:
             glavnui()
 
@@ -970,5 +1103,7 @@ Autorizashion()
 # klassik_isskustv()
 
 # tradighi_isskustv()
+
+# arheolog_bydushev()
 
 root.mainloop()

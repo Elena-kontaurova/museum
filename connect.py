@@ -46,13 +46,7 @@ class Exhibit(DataBase):
     exposishi = CharField()
     image = CharField()
     aftor = ForeignKeyField(Authors)
-
-
-class Registration(DataBase):
-    ''' регистрация'''
-    id = AutoField()
-    user = CharField()
-    password = CharField()
+    exposition = ForeignKeyField(Exposition)
 
 
 class Authorization(DataBase):
@@ -62,7 +56,13 @@ class Authorization(DataBase):
     password = CharField()
 
 
+class Role(DataBase):
+    id = AutoField()
+    id_user = ForeignKeyField(Authorization)
+    role = CharField()
+
+
 db.connect()
 db.create_tables([Exposition, Authors, Exhibit,
-                  Registration, Authorization], safe=True)
+                  Role, Authorization], safe=True)
 db.close
